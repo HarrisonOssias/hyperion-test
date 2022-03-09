@@ -16,7 +16,6 @@ router.post('/latest', async (req, res) => {
 	// api/user/USER_ID_NUMBER
 	// function must be async to return promise
 	let userData = req.body;
-	console.log(userData);
 	try {
 		const temps = await prisma.$queryRawUnsafe(
 			`SELECT PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY data.temps) as median, MAX(data.temps) as max,MIN(data.temps) as min, round(AVG(data.temps),1) as average, data.time FROM 

@@ -10,6 +10,13 @@ const port = process.env.PORT || 3001;
 /*-----------------------------------------------------------Routes File---------------------------------------------------------------------- */
 import routes from './src/routes.js';
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static());
+	app.get('*', (req, res) => {
+		req.sendFile(path.resolve(__dirname, '../client/build', index.html));
+	});
+}
+
 // Cross Origin Setup
 app.use(cors());
 
