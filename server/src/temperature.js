@@ -4,6 +4,8 @@ const router = express.Router();
 
 /*-----------------------------------------------------------Dependency Imports-------------------------------------------------------- */
 import { PrismaClient } from '@prisma/client';
+import moment from 'moment';
+
 const prisma = new PrismaClient();
 
 router.use('/temperature', router);
@@ -23,6 +25,11 @@ router.post('/latest', async (req, res) => {
 FROM (SELECT * FROM ${userData.base} GROUP BY  time ORDER BY time DESC LIMIT ${userData.limit}) AS temp) as data
 GROUP BY data.time;`
 		);
+		temps.forEach((d) => {
+			d.time = moment(d.time).format('llll'); // date -> epoch
+			d.hour = d.time.substring(17);
+			d.date = d.time.substring(0, 10);
+		});
 		res.json(temps);
 	} catch (e) {
 		console.log(e);
