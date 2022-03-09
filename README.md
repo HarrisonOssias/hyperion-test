@@ -18,4 +18,6 @@
 **Open new terminal**
 1. `cd server`
 2. `yarn install --save`
-3. `yarn start`
+3. `prisma generate`
+4. `yarn start`
+
